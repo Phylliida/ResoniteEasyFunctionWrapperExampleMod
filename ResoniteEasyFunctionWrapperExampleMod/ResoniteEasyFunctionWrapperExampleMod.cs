@@ -5,6 +5,7 @@ using ResoniteEasyFunctionWrapper;
 using FrooxEngine;
 using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
 
 namespace ResoniteEasyFunctionWrapperExampleMod
 {
@@ -12,6 +13,13 @@ namespace ResoniteEasyFunctionWrapperExampleMod
     // Class name can be anything
     public class MyExportedMethods
     {
+        public static async Task<int> waitAndAdd(int a, int b, int millis)
+        {
+            await Task.Delay(millis);
+            return a + b;
+        }
+
+
         // All methods should be static
 
         // Each method will be exported
@@ -81,8 +89,8 @@ namespace ResoniteEasyFunctionWrapperExampleMod
 
         public static void SetupMod()
         {
-            harmony = new Harmony(harmony_id);
-            harmony.PatchAll();
+            //harmony = new Harmony(harmony_id);
+            //harmony.PatchAll();
 
             ResoniteEasyFunctionWrapper.ResoniteEasyFunctionWrapper.WrapClass(
                 typeof(MyExportedMethods),
@@ -91,9 +99,9 @@ namespace ResoniteEasyFunctionWrapperExampleMod
 
         static void BeforeHotReload()
         {
-            harmony = new Harmony(harmony_id);
+            //harmony = new Harmony(harmony_id);
             // This runs in the current assembly (i.e. the assembly which invokes the Hot Reload)
-            harmony.UnpatchAll();
+            //harmony.UnpatchAll();
 
             // Remove menus and class wrappings
             ResoniteEasyFunctionWrapper.ResoniteEasyFunctionWrapper.UnwrapClass(
